@@ -1,3 +1,28 @@
+/*----------Contents---------
+I--Airplane Class
+  I-a takeOff Method
+  I-b landing Method
+II--Person Class
+  II-a eat Method
+  II-b poop Method
+  II-c toString Method
+III--Car Class
+  III-a fill Method
+  III-b drive Method
+IV--Lambdasian Class
+  IV-a speak Method
+V--Instructor class
+  V-a demo Method
+  V-b grade Method
+  V-c grading Method (stretch)
+VI--Student Class
+    V-a listSubjects Method
+    V-b PRAssignment Method
+    V-c standup Method
+    V-d graduate Method
+VII--Project Manager Class
+*/
+
 /*
   EXAMPLE TASK:
     - Write an Airplane class whose constructor initializes `name` from an argument.
@@ -9,13 +34,16 @@
 
 // EXAMPLE SOLUTION CODE:
 class Airplane {
+  // I--Airplane Class constructor takes a name property and sets isFlying to false
   constructor(name) {
     this.name = name;
     this.isFlying = false;
   }
+  // I-a takeOff Method sets isFlying property to true when called
   takeOff() {
     this.isFlying = true;
   }
+  // I-b land Method sets isFlying property to false when called
   land() {
     this.isFlying = false;
   }
@@ -41,21 +69,21 @@ class Airplane {
 */
 
 class Person {
-  // constructor for Person class with name, age, and an empty array assigned to stomach
+  //II-- Person Class constructor with name, age, and an empty array assigned to stomach
   constructor(name, age) {
     (this.name = name), (this.age = age), (this.stomach = []);
   }
-  // Method to add items ("Food") to the stomach array property
+  // II-a eat Method to add items ("Food") to the stomach array property
   eat(food) {
     if (this.stomach.length < 10) {
       return this.stomach.push(food);
     }
   }
-  // Method to clear out the stomach array
+  // II-b poop Method to clear out the stomach array
   poop() {
     this.stomach = [];
   }
-  // Method Simply output objects `name, age` property as a string literal
+  // II-c toString Method Simply output objects `name, age` property as a string literal
   toString() {
     return `${this.name}, ${this.age}`;
   }
@@ -76,21 +104,26 @@ class Person {
 */
 
 class Car {
+  // III--Car Class Constructor with property  model, miles per gallon passed in during instantiation, also creats a tank and odometer property and sets them to zero
   constructor(model, milesPerGallon) {
     (this.model = model),
       (this.milesPerGallon = milesPerGallon),
       (this.tank = 0),
       (this.odometer = 0);
   }
+  //III-a Method to add gas to tank in gallons
   fill(gallons) {
     this.tank += gallons;
   }
+  // III-b Method that takes a number (the distance wanted to travel)
   drive(distance) {
-    const maxDistance = this.tank * this.milesPerGallon;
+    const maxDistance = this.tank * this.milesPerGallon; //checks how far car can go with current gas
     if (distance <= maxDistance) {
+      //checks if desired distance to travel is less than or equal to max distance  car can travel
       this.tank -= distance / this.milesPerGallon;
-      this.odometer += distance;
+      this.odometer += distance; //empties tank an amount equal to distance travelled / miles per gallon of car, increases odometer by distance amount
     } else {
+      //executed if distance is greater than max travel distance of car
       this.odometer += maxDistance;
       this.tank = 0;
       return `I ran out of fuel at ${this.odometer} miles!`;
@@ -110,12 +143,15 @@ class Car {
         + Speaking should return a phrase `Hello my name is {name}, I am from {location}`.
         + {name} and {location} of course come from the instance's own properties.
 */
+
 class Lambdasian {
+  // IV--Lambdasian Class Constructor, takes an object with optional name,age,location properties
   constructor(attributes) {
     (this.name = attributes.name),
       (this.age = attributes.age),
       (this.location = attributes.location);
   }
+  // IV-a Speak Method returns a string literal containing objects name and location (if any)
   speak() {
     return `Hello my name is ${this.name}, I am from ${this.location}`;
   }
@@ -136,23 +172,27 @@ class Lambdasian {
         + `grade` receives a `student` object and a `subject` string as arguments and returns '{student.name} receives a perfect score on {subject}'
 */
 class Instructor extends Lambdasian {
+  // IV Instructor Class Constructor, subclass of Lambdasian, takes an object with optional name,age,location,specialty,favLanguage,catchphrase property
   constructor(instructorAttr) {
     super(instructorAttr),
       (this.specialty = instructorAttr.specialty),
       (this.favLanguage = instructorAttr.favLanguage),
       (this.catchPhrase = instructorAttr.catchPhrase);
   }
+  // IV-a demo Method takes a subject string and returns a string literal containing subject
   demo(subject) {
     return `Today we are learning about ${subject}`;
   }
+  // IV-b grade Method takes a student object and a subject String, returns string literal with student.name property and the subject
   grade(student, subject) {
     return `${student.name} receives a perfect score on ${subject}`;
   }
-
+  // IV-c grading method that takes a student object adds a random grades assignment array and updates student grade property
   grading(student) {
+    //New grade is a random number between 1-100 rounded to nearest whole number and pushes it to students assignment array
     const newGrade = Math.round(Math.floor(Math.random() * 101));
     student.assignments.push(newGrade);
-
+    //Uses reduce on student assignment property and then divides total by assignment property length assigns it to the grade property
     student.grade = Math.round(
       student.assignments.reduce((sum, grade) => sum + grade) /
         student.assignments.length
@@ -177,6 +217,7 @@ class Instructor extends Lambdasian {
         + `sprintChallenge` similar to PRAssignment but returns `student.name has begun sprint challenge on {subject}`
 */
 class Student extends Lambdasian {
+  // V--Student Class Constructor, subclass of Lambdasian, takes a student object with optional: name(str),age(num),location(str),previousBackground(str),className(str:ex"Math Class"),favSubjects(array:ex["java","html"])
   constructor(studentAttr) {
     super(studentAttr),
       (this.previousBackground = studentAttr.previousBackground),
@@ -185,23 +226,27 @@ class Student extends Lambdasian {
       (this.grade = 0),
       (this.assignments = []);
   }
+  // V-a returns str literal with students favSubject array
   listSubjects() {
     return `Loving ${this.favSubjects}`;
   }
+  // V-b takes subject(str) returns string literal with students.name and subject
   PRAssignment(subject) {
     return `${this.name} has submitted a PR for ${subject}`;
   }
+  // V-c takes a subject(str) and returns a string literal with $subject and $objects name
   sprintChallenge(subject) {
     return `${this.name} has begun sprint challenge on ${subject}`;
   }
+  // V-d checks if students assignment array has at least 5 items in it, then checks grade property
   graduate() {
     if (this.assignments.length >= 5) {
       if (this.grade >= 70) {
         return `You're ready to graduate, Congratulations`;
       } else {
         return `You have to get your grade up, get back to studying`;
-      }
-    }
+      } //end of if/else block line 244
+    } //End of if statment line 234
     return `Your coursework isn't done, you\'ve only completed ${this.assignments.length} out of 5`;
   }
 }
@@ -220,31 +265,21 @@ class Student extends Lambdasian {
         + `debugsCode` a method that takes in a student object and a subject and returns `{name} debugs {student.name}'s code on {subject}`
 */
 class ProjectManager extends Instructor {
+  // VI--ProjectManager, subclasses Instructor, takes an object with optional:optional: name(str),age(num),location(str),gradClassName(str:ex CS101), favInstructor(str)
   constructor(PMAttrs) {
     super(PMAttrs),
       (this.gradClassName = PMAttrs.gradClassName),
       (this.favInstructor = PMAttrs.favInstructor);
   }
+  // VI-a takes a channel str and returns a string literal with student name and channel
   standUp(channel) {
     return `${this.name} announces to ${channel}, @channel standy times!`;
   }
+  // VI-b takes a Student object and a subject(str) returns objects name property, students name property and subject
   debugsCode(student, subject) {
     return `${this.name} degugs ${student.name}\'s code on ${subject}`;
   }
 }
-const paul = new ProjectManager({
-  name: "Mike",
-  age: "20",
-  location: "Mars",
-  gradClassName: "Web 5",
-  favInstructor: "Brit Hemming"
-});
-paul.grading(mike);
-paul.grading(mike);
-paul.grading(mike);
-console.log(mike.graduate());
-
-// console.log(mike.grade);
 
 /*
   STRETCH PROBLEM (no tests!)
